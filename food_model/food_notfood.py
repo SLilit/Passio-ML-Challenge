@@ -131,37 +131,37 @@ tf.estimator.train_and_evaluate(food_classifier, train_spec, eval_spec)
 
 
 #Pred data reading and preprocessing function
-def img_input_fn(path):
-    imagepaths = []
-    
-    images = os.walk(path).__next__()[2]
-    for img in images:
-        img_path = os.path.join(path,img)
-        imagepaths.append(img_path)
-       
-    imagepaths = tf.constant(imagepaths)
-    
-    def _parse_function(file):
-        image_string = tf.read_file(file)
-        image_decoded = tf.image.decode_jpeg(image_string)
-        image_resized = tf.image.resize_images(image_decoded,[244,244])
-        image_resized.set_shape([244, 244, 3])
-        return image_resized
-    
-    dataset = tf.data.Dataset.from_tensor_slices(imagepaths)
-    dataset = dataset.map(_parse_function)
-    
-    iterator = dataset.make_one_shot_iterator() 
-    features = iterator.get_next()
-    
-    return features
+#def img_input_fn(path):
+#    imagepaths = []
+#    
+#    images = os.walk(path).__next__()[2]
+#    for img in images:
+#        img_path = os.path.join(path,img)
+#        imagepaths.append(img_path)
+#       
+#    imagepaths = tf.constant(imagepaths)
+#    
+#    def _parse_function(file):
+#        image_string = tf.read_file(file)
+#        image_decoded = tf.image.decode_jpeg(image_string)
+#        image_resized = tf.image.resize_images(image_decoded,[244,244])
+#        image_resized.set_shape([244, 244, 3])
+#        return image_resized
+#    
+#    dataset = tf.data.Dataset.from_tensor_slices(imagepaths)
+#    dataset = dataset.map(_parse_function)
+#    
+#    iterator = dataset.make_one_shot_iterator() 
+#    features = iterator.get_next()
+#    
+#    return features
 
-pred = food_classifier.predict(input_fn=lambda: img_input_fn("n"))
+#pred = food_classifier.predict(input_fn=lambda: img_input_fn("n"))
 
-for prediction in pred:
+#for prediction in pred:
    
-    if prediction["classes"] == 0:
-        print("Food")
-    else:
-        print("Not Food")
+#    if prediction["classes"] == 0:
+#        print("Food")
+#    else:
+#        print("Not Food")
 
