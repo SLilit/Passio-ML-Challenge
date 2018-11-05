@@ -120,11 +120,11 @@ eval_int = 50
 food_classifier = tf.estimator.Estimator(model_fn=cnn_model_fn, model_dir='food_model',
                                         config=tf.estimator.RunConfig(save_checkpoints_secs=eval_int))  
 
-train_spec = tf.estimator.TrainSpec(input_fn= lambda: imgs_input_fn("train", mode=tf.estimator.ModeKeys.TRAIN), max_steps=60)
+train_spec = tf.estimator.TrainSpec(input_fn= lambda: imgs_input_fn("./food_model/train", mode=tf.estimator.ModeKeys.TRAIN), max_steps=60)
 
 #exporter = tf.estimator.LatestExporter('exporter', serving_input_fn)
 
-eval_spec = tf.estimator.EvalSpec(input_fn= lambda: imgs_input_fn("test", mode=tf.estimator.ModeKeys.EVAL),
+eval_spec = tf.estimator.EvalSpec(input_fn= lambda: imgs_input_fn("./food_model/test", mode=tf.estimator.ModeKeys.EVAL),
                                    start_delay_secs=eval_int, throttle_secs=eval_int)
     
 tf.estimator.train_and_evaluate(food_classifier, train_spec, eval_spec)
