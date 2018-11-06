@@ -117,7 +117,7 @@ def cnn_model_fn(features, labels, mode):
 #food_classifier = tf.keras.estimator.model_to_estimator(keras_model=model, model_dir='food_model')
 eval_int = 50
 
-food_classifier = tf.estimator.Estimator(model_fn=cnn_model_fn, model_dir='food_model',
+food_classifier = tf.estimator.Estimator(model_fn=cnn_model_fn, model_dir='./food_model/food_notfood_trained',
                                         config=tf.estimator.RunConfig(save_checkpoints_secs=eval_int))  
 
 train_spec = tf.estimator.TrainSpec(input_fn= lambda: imgs_input_fn("./food_model/train", mode=tf.estimator.ModeKeys.TRAIN), max_steps=60)
